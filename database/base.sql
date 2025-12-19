@@ -144,3 +144,42 @@ JOIN livreur lr ON l.id_livreur = lr.id_livreur
 JOIN conf cf ON 1=1;  
 
 SELECT * FROM v_livraison_revenu;
+
+
+
+CREATE OR REPLACE VIEW v_revenu_journalier AS
+SELECT 
+l.date_livraison,
+   SUM(((c.poids * cf.prix_kilo) - (l.carburant + lr.salaire))) AS profit
+FROM livraison l
+JOIN colis c ON l.id_colis = c.id_colis
+JOIN livreur lr ON l.id_livreur = lr.id_livreur
+JOIN conf cf ON 1=1 GROUP BY l.date_livraison;  
+
+
+
+CREATE OR REPLACE VIEW v_revenu_mensuel AS
+SELECT 
+    YEAR(l.date_livraison) AS annee,
+    MONTHNAME(l.date_livraison) AS mois,
+    SUM((c.poids * cf.prix_kilo) - (l.carburant + lr.salaire)) AS profit
+FROM livraison l
+JOIN colis c   ON l.id_colis = c.id_colis
+JOIN livreur lr ON l.id_livreur = lr.id_livreur
+JOIN conf cf ON 1 = 1
+GROUP BY 
+    YEAR(l.date_livraison),
+    MONTH(l.date_livraison);
+
+
+CREATE OR REPLACE VIEW v_revenu_annuel AS
+SELECT 
+    YEAR(l.date_livraison) AS annee,
+    SUM((c.poids * cf.prix_kilo) - (l.carburant + lr.salaire)) AS profit
+FROM livraison l
+JOIN colis c    ON l.id_colis = c.id_colis
+JOIN livreur lr ON l.id_livreur = lr.id_livreur
+JOIN conf cf ON 1 = 1
+GROUP BY YEAR(l.date_livraison);
+
+
