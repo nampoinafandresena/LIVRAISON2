@@ -1,0 +1,13 @@
+alefa ao amin ny assets: 
+	-css (fichiers css rehetra)
+	-images (ilay document mihitsy)
+le public:
+	-avoaka eo ivelany le public rehetra
+app/config:
+	-config.php 
+	-routes.php
+		-> miaraka amin ny modifications rehetra am routage
+app/views:
+	-le nampiana
+app/models
+app/controllers

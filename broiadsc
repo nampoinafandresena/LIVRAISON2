@@ -1,0 +1,11 @@
+SELECT 
+    DATE(date_debut) AS jour,
+    v.immatriculation,
+    CONCAT(c.nom, ' ', c.prenom) AS chauffeur,
+    SUM(t.distance_km) AS km_effectue,
+    SUM(t.montant_recette) AS montant_recette,
+    SUM(t.montant_carburant) AS montant_carburant
+FROM Trajet t
+JOIN Vehicule v ON t.id_vehicule = v.id_vehicule
+JOIN Chauffeur c ON t.id_chauffeur = c.id_chauffeur
+GROUP BY jour, v.id_vehicule, c.id_chauffeur;
