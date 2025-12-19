@@ -149,7 +149,7 @@ SELECT * FROM v_livraison_revenu;
 
 CREATE OR REPLACE VIEW v_revenu_journalier AS
 SELECT 
-l.date_livraison,
+l.date_livraison as res_filtre,
    SUM(((c.poids * cf.prix_kilo) - (l.carburant + lr.salaire))) AS profit
 FROM livraison l
 JOIN colis c ON l.id_colis = c.id_colis
@@ -161,7 +161,7 @@ JOIN conf cf ON 1=1 GROUP BY l.date_livraison;
 CREATE OR REPLACE VIEW v_revenu_mensuel AS
 SELECT 
     YEAR(l.date_livraison) AS annee,
-    MONTHNAME(l.date_livraison) AS mois,
+    MONTHNAME(l.date_livraison) AS res_filtre,
     SUM((c.poids * cf.prix_kilo) - (l.carburant + lr.salaire)) AS profit
 FROM livraison l
 JOIN colis c   ON l.id_colis = c.id_colis
@@ -174,7 +174,7 @@ GROUP BY
 
 CREATE OR REPLACE VIEW v_revenu_annuel AS
 SELECT 
-    YEAR(l.date_livraison) AS annee,
+    YEAR(l.date_livraison) AS res_filtre,
     SUM((c.poids * cf.prix_kilo) - (l.carburant + lr.salaire)) AS profit
 FROM livraison l
 JOIN colis c    ON l.id_colis = c.id_colis

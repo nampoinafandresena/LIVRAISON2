@@ -3,6 +3,7 @@
 use app\controllers\ApiExampleController;
 use app\controllers\ColisController;
 use app\controllers\LivraisonController;
+use app\controllers\StatController;
 use app\controllers\MiniTemplateController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
@@ -19,6 +20,11 @@ use flight\net\Router;
 		$router->get('/', function() use ($app){
 			$app->render('index');
 		});
+
+		$router->get('/stat/form',function() use ($app){
+			$app->render('statistiques');
+		});	
+		$router->get('/stat/form/result/', [StatController::class, 'getStat']);
 
 			// makany am liste livraison
 		// $router->get('/colis/livraisons/list',[LivraisonController::class,'allLivraisonDetails']);
